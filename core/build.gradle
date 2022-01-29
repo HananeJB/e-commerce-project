@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+
+def debugApiBaseUrl = "\"https://dev.justjava.store/\""
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    def localProperties = new Properties()
+    localProperties.load(new FileInputStream(localPropertiesFile))
+
+    // Ability to provide a different debug url
+    def overrideUrl = localProperties.getProperty("debugApiBaseUrl")
+    if (overrideUrl != null) {
+        debugApiBaseUrl = overrideUrl
+    }
+}
+
+android {
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField "String", "API_BASE_URL", debugApiBaseUrl
+        }
+        release {
+            minifyEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+            buildConfigField "String", "API_BASE_URL", "\"https://api.justjava.store/\""
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api Dependencies.kotlinStdlib
+    api Dependencies.coroutines
+    api Dependencies.serialization
+    api Dependencies.coroutinesAndroid
+    api Dependencies.corouinesPlayServices
+
+    implementation Dependencies.appcompat
+
+    // REST
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofitSerialization
+    implementation Dependencies.okhttpLogging
+    implementation Dependencies.retrofitCoroutinesAdapter
+
+    // Other
+    api Dependencies.koin
+    implementation Dependencies.timber
+
+    testImplementation Dependencies.junit
+    androidTestImplementation Dependencies.testRunner
+    androidTestImplementation Dependencies.espressoCore
+    testImplementation Dependencies.mockk
+}

@@ -1,0 +1,86 @@
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+
+    }
+    dependencies {
+        classpath Dependencies.androidGradlePlugin
+        classpath Dependencies.googleServices
+        classpath Dependencies.kotlinGradlePlugin
+        classpath Dependencies.serializationPlugin
+        classpath Dependencies.sentryGradlePlugin
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id 'io.gitlab.arturbosch.detekt' version "1.8.0"
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+        maven {
+            url 'https://maven.google.com/'
+        }
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+subprojects {
+    apply {
+        plugin("io.gitlab.arturbosch.detekt")
+    }
+
+    dependencies {
+        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.8.0"
+    }
+
+    detekt {
+        failFast = true
+        buildUponDefaultConfig = true
+        autoCorrect = true
+        config = rootProject.files("config/detekt/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+
+        reports {
+            html {
+                enabled = true
+                destination = file("build/reports/detekt.html")
+            }
+        }
+    }
+
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            android {
+                compileSdkVersion AndroidConfig.compiledSdk
+
+                defaultConfig {
+                    minSdkVersion AndroidConfig.minSdk
+                    targetSdkVersion AndroidConfig.targetSdk
+                }
+
+                // Required for @Parcelize
+                androidExtensions {
+                    experimental = true
+                }
+            }
+        }
+    }
+}

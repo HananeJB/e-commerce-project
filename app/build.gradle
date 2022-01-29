@@ -1,0 +1,101 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.sentry.android.gradle'
+
+// A properties file is located at projectFolder/keys.properties
+def keysPropertiesFile = rootProject.file("keys.properties")
+def keys = new Properties()
+keys.load(new FileInputStream(keysPropertiesFile))
+
+android {
+    defaultConfig {
+        applicationId "com.marknkamau.justjava"
+
+        versionCode 14
+        versionName "2.2.1"
+
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "com.marknkamau.justjava.testUtils.TestApplicationRunner"
+
+        buildConfigField("String", "googleClientId", '"565628649475-4vp8dm790n2kuuhqpu3o662e9odht703.apps.googleusercontent.com"')
+        buildConfigField("String", "sentryDsn", keys['SENTRY_DSN'])
+        resValue "string", "google_maps_key", keys['GOOGLE_MAPS_API_KEY'] // Generates @strings/google_maps_key
+    }
+    signingConfigs {
+        debug {
+            storeFile file("../keystore/justjava-debug.jks")
+            storePassword "justjava-debug"
+            keyAlias "key0"
+            keyPassword "justjava-debug"
+        }
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':core')
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //Android libraries
+    implementation Dependencies.material
+    implementation Dependencies.cardview
+    implementation Dependencies.appcompat
+    implementation Dependencies.recycerview
+    implementation Dependencies.constraintLayout
+
+    // Firebase libraries
+    implementation Dependencies.firebaseMessaging
+
+    // ViewModel
+    implementation Dependencies.viewModelKtx
+    // Lifecycle
+    implementation Dependencies.lifecycleRuntimeKtx
+
+    // Room
+    implementation Dependencies.roomRuntime
+    implementation Dependencies.roomKotlin
+    kapt Dependencies.roomCompiler
+
+    // DI
+    implementation Dependencies.koin
+    implementation Dependencies.koinViewModel
+
+    // Other libraries
+    implementation Dependencies.picasso
+    implementation Dependencies.timber
+    implementation Dependencies.shimmer
+    implementation Dependencies.playServicesAuth
+    implementation Dependencies.playServicesMaps
+    implementation Dependencies.places
+    implementation Dependencies.sentry
+
+    // Test libraries
+    testImplementation Dependencies.junit
+    testImplementation Dependencies.mockk
+    testImplementation Dependencies.coroutinesTest
+    testImplementation Dependencies.archCoreTesting
+    androidTestImplementation Dependencies.mockk
+    androidTestImplementation Dependencies.mockAndroid
+    androidTestImplementation Dependencies.testRunner
+    androidTestImplementation Dependencies.testRules
+    androidTestImplementation Dependencies.espressoCore
+    androidTestImplementation Dependencies.espressoIntents
+    androidTestImplementation Dependencies.espressoContrib
+    androidTestImplementation Dependencies.androidXTestCore
+}
+
+apply plugin: 'com.google.gms.google-services'

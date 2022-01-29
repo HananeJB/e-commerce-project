@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">JustJava</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="about">About</string>
+
+    <string name="clear_cart">Clear cart</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="cart">Cart</string>
+
+    <string name="delivery_address">Delivery Address</string>
+    <string name="developer">Developer</string>
+
+    <string name="email_address">Email Address</string>
+
+    <string name="full_name">Full name</string>
+
+    <string name="ksh">Ksh. %d</string>
+
+    <string name="logout">Logout</string>
+
+    <string name="price_listing">Ksh. %s</string>
+    <string name="price_listing_w_add">+ Ksh. %s</string>
+    <string name="profile">Profile</string>
+    <string name="place_order">Place order</string>
+    <string name="password">Password</string>
+
+    <string name="required">Required</string>
+
+    <string name="sign_up">Sign up</string>
+    <string name="source_code">Source Code</string>
+
+    <string name="total">Total</string>
+
+    <string name="drink_image_content_desc">Drink Image</string>
+    <string name="app_icon_content_desc">App icon</string>
+    <string name="minus_quantity_button_content_desc">Minus quantity button</string>
+    <string name="add_quantity_button_content_desc">Add quantity button</string>
+    <string name="payment_method">Payment method</string>
+    <string name="payment_status">Payment status</string>
+    <string name="order_items">Order items</string>
+    <string name="order_id">Order ID</string>
+    <string name="order_status">Order status</string>
+    <string name="additional_comments">Additional comments</string>
+    <string name="back_button">Back button</string>
+    <string name="order_details">Order details</string>
+    <string name="about_contact_email_content_desc">Contact via email</string>
+    <string name="about_view_linkedin_content_desc">View LinkedIn</string>
+    <string name="about_view_website_content_desc">View website</string>
+    <string name="about_view_github_content_desc">View Github profile</string>
+    <string name="app_icon">App Icon</string>
+    <string name="app_icon_attribution">Coffee by Nitikta from The Noun Project</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
+    <string name="account_details">Account details</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="developer_name">Mark Njung\'e</string>
+    <string name="developer_contact">contact@marknjunge.com</string>
+    <string name="checkout">Checkout</string>
+    <string name="reset_password_error_message">Something went wrong.\n\nTry opening the link from the email again.</string>
+
+    <plurals name="order_info">
+        <item quantity="one">item for</item>
+        <item quantity="other">items for</item>
+    </plurals>
+
+    <plurals name="item_s">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+</resources>
